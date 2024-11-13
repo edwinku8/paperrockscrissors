@@ -35,14 +35,39 @@
             display: flex;
             align-items: center;
             margin-right: 5px;
+            z-index: 1;
         }
         .score{
-            color: white;
-            display: flexbox;
+            color: rgb(248, 0, 0);
             position:absolute;
-            bottom: 245px;
+            top: 280px;
+            font-size: 50px;
         }
-    </style>
+        .description{
+            border-radius: 20px;
+            z-index: 100;
+            position: fixed;
+            left: 10%;
+            top: 75px;
+            width: 400px;
+            height: 250px;
+            padding: 20px 30px 30px 30px;
+            background-color: rgb(118, 224, 224);
+            opacity: 1;
+            transition: opacity 0.2s ,visibility 0.2s;
+        }
+        .description.hidden{
+            opacity: 0;
+            visibility: hidden;
+        }
+        .description button{
+            position: absolute;
+            right: 35px;
+            width: 80px;
+            border-radius: 25px; 
+        }
+
+    </style> 
     <script>
         
         function define(){
@@ -76,6 +101,7 @@
                 };
             
             alert(`You choose ${playerChoose}. Computer choose ${computerMove}.${result}`) ;
+            changeScore(result);
             showAnswer(playerChoose,computerMove);
         }
         function showAnswer(playerChoose,computerChoose){
@@ -84,20 +110,40 @@
             playerImage.src = `image/${playerChoose}.jpg`;
             computerImage.src = `image/${computerChoose}.jpg`;
         }
+        function hideContent(){
+            const des = document.getElementById('description');
+            des.classList.add('hidden');
+        }
+
+        var computer = 0
+        var player  = 0
+        function changeScore(result){
+            if(result==='You Lose'){
+                computer ++
+            }else if(result==='You Win'){
+                player ++
+            }
+            document.getElementById('score').innerHTML = `${player} : ${computer}`
+        }
     </script>
 </head>
 <body>
+    <!-- <div class="description" id="description"> 
+        <p>听说有人提出了一种方法，可能提高在剪刀石头布游戏中的胜率。为验证该方法的有效性，我制作了这个网页，供大家参与测试。希望通过多次对战，能确认这一方法是否确实奏效。</p>
+        <p>I came across a method that claims to improve the chances of winning in rock-paper-scissors. To verify its effectiveness, I created this webpage for everyone to test it out. Through repeated games, we aim to determine whether this approach truly works.</p>
+        <button onclick="hideContent()">OK</button>
+    </div> -->
     <p style="color: white;">Let's fight! The one who gets 3 points wins!</p>
     <br>
     <div class="answer">
-    <div class=>
+    <div class='answer'>
         <!-- player and computer choice -->
          <img id='playerAnswer' src='image/black.png' alt="" >
-         <img style="width: 100px; height: 100px;" src="image/vs.png" alt="">
+         <img style="width: 100px; height: 100px;" src="image/vs.png" >
          <img id='computerAnswer' src="image/black.png" alt="">
     </div>
-    <div class="score">
-        1:1
+    <div class="score" id="score">
+        0 : 0
     </div>
     <div class="all_choice">
         <img class='choices' src="image/paper.jpg" alt="paper" onclick='
